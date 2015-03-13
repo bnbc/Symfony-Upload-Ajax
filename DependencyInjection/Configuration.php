@@ -1,4 +1,4 @@
-z<?php
+<?php
 
 namespace Bnbc\UploadBundle\DependencyInjection;
 
