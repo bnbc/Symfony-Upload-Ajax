@@ -24,7 +24,10 @@
     <div id="{{ id }}_progress" class="bnbc-ajax-file-progress"></div>
 
     <script type="text/javascript">
-        var bnbc_ajax_file = function(){
+        if (typeof bnbc_ajax_file == 'undefined')
+            bnbc_ajax_file = new Array();
+
+        bnbc_ajax_file.push(function(){
             $('#{{ id }}').fileupload({
                 dataType: 'json',
                 paramName: 'bnbc_ajax_file_form[]',
@@ -45,7 +48,7 @@
                     });
                 }
             });
-        }
+        });
     </script>
 
     {% endspaceless %}
