@@ -1,0 +1,52 @@
+{% block bnbc_ajax_file_widget %}
+    {% spaceless %}    
+
+	{{ block('hidden_widget') }}
+    {% set type = 'file' %}
+    {% set id = 'bnbc_ajax_file_' ~ id %}
+    {% set full_name = 'bnbc_ajax_file_' ~ full_name %}
+    {% set attr = {
+        'data-max-size'     : form.vars.max_size,
+        'data-mime-types'   : form.vars.mime_types|json_encode,
+        'data-folder'       : form.vars.folder,
+        'data-url'          : path('bnbc_upload_default_index')
+    } %}
+
+    {% if form.vars.multiple %}
+    {%  set attr = attr|merge({'multiple': form.vars.multiple}) %}
+    {% endif %}
+
+    {{ block('form_widget_simple') }}  
+    
+    {% if form.vars.dropZone %}
+    <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone"></div>
+    {% endif %}
+    <div id="{{ id }}_progress" class="bnbc-ajax-file-progress"></div>
+
+    <script type="text/javascript">
+        var bnbc_ajax_file = function(){
+            $('#{{ id }}').fileupload({
+                dataType: 'json',
+                paramName: 'bnbc_ajax_file_form[]',
+                {% if form.vars.dropZone %}
+                dropZone: ('#{{ id }}_dropzone'),
+                autoUpload: {{ form.vars.autoUpload }},
+                {% endif %}
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#{{ id }}_progress').css(
+                        'width',
+                        progress + '%'
+                    ).text(progress + '%');
+                },
+                done: function (e, data) { 
+                    $.each(data.result.bnbc_ajax_file_form, function (index, file) {
+                        $('<p/>').text(file.name).appendTo($('#{{ id }}_progress'));
+                    });
+                }
+            });
+        }
+    </script>
+
+    {% endspaceless %}
+{% endblock %}

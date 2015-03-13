@@ -1,0 +1,5 @@
+services:
+    bnbc_upload.form.type.bnbc_ajax_file:
+        class: Bnbc\UploadBundle\Form\Type\AjaxfileType
+        tags:
+            - { name: form.type, alias: bnbc_ajax_file }
