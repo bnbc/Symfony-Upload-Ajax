@@ -1,55 +1,68 @@
 {% block bnbc_ajax_file_widget %}
     {% spaceless %}    
-
-	{{ block('hidden_widget') }}
-    {% set type = 'file' %}
-    {% set id = 'bnbc_ajax_file_' ~ id %}
-    {% set full_name = 'bnbc_ajax_file_' ~ full_name %}
-    {% set attr = {
-        'data-max-size'     : form.vars.max_size,
-        'data-mime-types'   : form.vars.mime_types|json_encode,
-        'data-folder'       : form.vars.folder,
-        'data-url'          : path('bnbc_upload_default_index')
-    } %}
-
-    {% if form.vars.multiple %}
-    {%  set attr = attr|merge({'multiple': form.vars.multiple}) %}
-    {% endif %}
-
-    {{ block('form_widget_simple') }}  
     
-    {% if form.vars.dropZone %}
-    <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone"></div>
-    {% endif %}
-    <div id="{{ id }}_progress" class="bnbc-ajax-file-progress"></div>
+    <div class="bnbc-ajax-file-widget">  
+    	{{ block('hidden_widget') }}
+        {% set type = 'file' %}
+        {% set original_id = id %}
+        {% set id = 'bnbc_ajax_file_' ~ original_id %}
+        {% set full_name = 'bnbc_ajax_file_' ~ full_name %}        
 
-    <script type="text/javascript">
-        if (typeof bnbc_ajax_file == 'undefined')
-            bnbc_ajax_file = new Array();
+        {% if form.vars.multiple %}
+        {%  set attr = {'multiple': form.vars.multiple} %}
+        {% endif %}
 
-        bnbc_ajax_file.push(function(){
-            $('#{{ id }}').fileupload({
-                dataType: 'json',
-                paramName: 'bnbc_ajax_file_form[]',
-                {% if form.vars.dropZone %}
-                dropZone: ('#{{ id }}_dropzone'),
-                autoUpload: {{ form.vars.autoUpload }},
-                {% endif %}
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#{{ id }}_progress').css(
-                        'width',
-                        progress + '%'
-                    ).text(progress + '%');
-                },
-                done: function (e, data) { 
-                    $.each(data.result.bnbc_ajax_file_form, function (index, file) {
-                        $('<p/>').text(file.name).appendTo($('#{{ id }}_progress'));
-                    });
-                }
+        {{ block('form_widget_simple') }}  
+        
+        {% if form.vars.dropZone %}
+        <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone">{{ form.vars.dropzoneText }}</div>
+        {% endif %}
+        <div id="{{ id }}_progress" class="bnbc-ajax-file-progress"></div>
+        <div id="{{ id }}_list" class="bnbc-ajax-file-list"></div>
+
+        <script type="text/javascript">
+            var formData = [];
+            {% for name, value in form.vars.formData %}
+            formData.push({'name': '{{ name }}', value: '{{ value }}'});
+            {% endfor %}
+
+            if (typeof bnbc_ajax_file == 'undefined')
+                bnbc_ajax_file = new Array();
+
+            bnbc_ajax_file.push(function(){
+                $('#{{ id }}').fileupload({
+                    url: '{{ path('bnbc_upload_default_index') }}',
+                    dataType: 'json',
+                    formData: formData,
+                    paramName: 'bnbc_ajax_file_form[]',
+                    {% if form.vars.dropZone %}
+                    dropZone: ('#{{ id }}_dropzone'),                    
+                    {% endif %}
+                    autoUpload: {{ form.vars.autoUpload }},
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#{{ id }}_progress').css(
+                            'width',
+                            progress + '%'
+                        ).text(progress + '%');
+                    },
+                    done: function (e, data) { 
+                        $.each(data.result.bnbc_ajax_file_form, function (index, file) {
+                            if($('#{{ original_id }}').val())
+                                $('#{{ original_id }}').val($('#{{ original_id }}').val() + ';' + file.name);
+                            else
+                               $('#{{ original_id }}').val(file.name);
+
+                            if($('#{{ id }}_list').text())
+                                $('#{{ id }}_list').text($('#{{ id }}_list').text() + ', ' + file.name);
+                            else
+                                 $('#{{ id }}_list').text(file.name);
+                        });
+
+                    }
+                });
             });
-        });
-    </script>
-
+        </script>
+    </div>
     {% endspaceless %}
 {% endblock %}
