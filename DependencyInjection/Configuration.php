@@ -22,10 +22,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('max_size')->defaultValue('10240k')->end() # 10 Mo
-                ->arrayNode('mime_types')
-                    ->prototype('scalar')->defaultNull()->end()
-                ->end()
+                ->scalarNode('max_file_size')->defaultNull()->end()
+                ->scalarNode('accept_file_types')->defaultValue('/.+$/i')->end()
                 ->scalarNode('upload_folder')->defaultValue('uploads')->end()
             ->end()
         ;
