@@ -24,10 +24,11 @@ class AjaxfileType extends AbstractType
                 'accept_file_types' => null,
                 'upload_folder'     => null, 
             ),
-            'multiple'      => false,
-            'dropZone'      => true,
-            'autoUpload'    => true,
-            'dropZoneText' => 'Drop file(s) here',
+            'multiple'          => false,
+            'dropZone'          => true,
+            'autoUpload'        => true,
+            'dropZoneText'      => 'Drop file(s) here',
+            'callbackFunction'  => null,
         ));
     }
 
@@ -35,11 +36,12 @@ class AjaxfileType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
-            'formData'      => $options['formData'],
-            'multiple'      => $options['multiple'], 
-            'dropZone'      => $options['dropZone'],
-            'autoUpload'    => $options['autoUpload'], 
-            'dropZoneText'  => $options['dropZoneText'], 
+            'formData'          => $options['formData'],
+            'multiple'          => $options['multiple'], 
+            'dropZone'          => $options['dropZone'],
+            'autoUpload'        => $options['autoUpload'], 
+            'dropZoneText'      => $options['dropZoneText'],
+            'callbackFunction'  => $options['callbackFunction'], 
         ));
     }
 

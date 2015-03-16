@@ -19,7 +19,7 @@
         {% endif %}
 
         <script type="text/javascript">
-            var {{ id }}_formData = [];
+            {{ id }}_formData = [];
             {% for name, value in form.vars.formData %}
                 {% if value %}
                     {{ id }}_formData.push({'name': '{{ name }}', value: '{{ value }}'});
@@ -30,6 +30,10 @@
                 bnbc_ajax_file = new Array();
 
             bnbc_ajax_file.push(function(){
+                {# Fix refresh page #}
+                $('#{{ original_id }}').val('');
+
+                {# Call fileupload plugin #}
                 $('#{{ id }}').fileupload({
                     url: '{{ path('bnbc_upload_default_index') }}',
                     dataType: 'json',
@@ -62,7 +66,10 @@
                                 var li = $('<li/>').html(file.name);                                   
                             }
                             $('#{{ id }}_list').append(li);   
-                        });    
+                        });  
+                        {% if form.vars.callbackFunction %}
+                        {{callbackFunction}}();
+                        {% endif %}  
                     }
                 });
             });
