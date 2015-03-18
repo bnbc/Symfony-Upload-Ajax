@@ -46,6 +46,17 @@ bnbc_upload:
     prefix:   /upload
 ```
 
+Ajouter la ressource pour le type de champs `bnbc_ajax_file`
+
+```yaml
+# app/config/config.yml
+
+twig:
+    form:
+        resources:
+            - 'BnbcUploadBundle:Form:fields.html.twig'
+```
+
 ## Options de configuration globale (facultatives)
 
 ### max\_file\_size  
