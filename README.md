@@ -106,7 +106,7 @@ Défaut:  `true`
 Texte la zone de glisser/déposer  
 Défaut:  `'Drop file(s) here'`
 ### callbackFunction
-Nom d'une fonction javascript à appeler une fois le téléversement terminé
+Nom d'une fonction javascript à appeler une fois le téléversement terminé  
 Défaut:  `null`
 
 ```php
