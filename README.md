@@ -102,17 +102,21 @@ Défaut:  `true`
 ### dropZone
 Affichage d'une zone de glisser/déposer  
 Défaut:  `true`
-### dropzoneText
+### dropZoneText
 Texte la zone de glisser/déposer  
 Défaut:  `'Drop file(s) here'`
+### callbackFunction
+Nom d'une fonction javascript à appeler une fois le téléversement terminé
+Défaut:  `null`
 
 ```php
 $formBuilder->add('myfield', 'bnbc_ajax_file', 
 	array(
-        'multiple'      => false,
-        'autoUpload'    => true,
-        'dropZone'      => true,
-        'dropzoneText' => 'Drop file(s) here',
+        'multiple'          => false,
+        'autoUpload'        => true,
+        'dropZone'          => true,
+        'dropZoneText'      => 'Drop file(s) here',
+        'callbackFunction'  => null,
 	)
 );
 ```
@@ -122,7 +126,7 @@ Vous pouvez redéfinir les options de configuration globale pour chaque champs d
 ```php
 $formBuilder->add('myfield', 'bnbc_ajax_file', 
 	array(
-        'formData'     => array(
+        'formData' => array(
             'max_file_size'     => 5 * 1024 * 1024,
             'accept_file_types' => null,
             'upload_folder'     => 'test', 
