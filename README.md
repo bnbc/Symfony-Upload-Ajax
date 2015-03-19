@@ -21,7 +21,7 @@ Ajouter le `require` à votre fichier composer.json et lancer la commande `compo
 Ajouter le bundle à votre kernel
 
 ```php
-<?php
+# app/AppKernel.php
 
 // in AppKernel::registerBundles()
 $bundles = array(
