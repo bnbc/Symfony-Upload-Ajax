@@ -6,7 +6,8 @@ Ce bundle vous permettra d'ajouter des champs d'upload en ajax dans vos formulai
 Ajouter le `require` à votre fichier composer.json et lancer la commande `composer update`
 
 ```yaml
-// composer.json
+# composer.json
+
 {
     // ...
     require: {
