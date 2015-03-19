@@ -12,7 +12,7 @@ Ajouter le `require` à votre fichier composer.json et lancer la commande `compo
     // ...
     require: {
         // ...
-        "bncb/upload-bundle": "dev-master"
+        "bnbc/upload-bundle": "dev-master"
     }
 }
 ```
