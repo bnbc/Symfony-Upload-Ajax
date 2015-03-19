@@ -1,6 +1,7 @@
 {
     "name": "bncb/upload-bundle",
     "description": "Symfony2 Upload Ajax Bundle",
+    "keywords": ["upload", "ajax", "symfony"],
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
