@@ -1,7 +1,5 @@
 # Bundle d'upload pour Symfony2
-En cours de développement...
 
-## Présentation
 Ce bundle vous permettra d'ajouter des champs d'upload en ajax dans vos formulaires.  
 [Basé sur le plugin d'upload blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 

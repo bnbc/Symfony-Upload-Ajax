@@ -1,0 +1,23 @@
+{
+    "name": "bncb/upload-bundle",
+    "description": "Symfony2 Upload Ajax Bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Beyssac",
+            "email": "benjamin.beyssac@gmail.com",
+            "homepage": "http://www.benjamin-beyssac.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.8",
+        "symfony/framework-bundle":         "~2.3",
+        "twig/twig":                        "*"
+    },
+    "autoload": {
+        "psr-0": { "Bnbc\\UploadBundle": "" }
+    },
+    "target-dir": "Bnbc/UploadBundle"
+}
