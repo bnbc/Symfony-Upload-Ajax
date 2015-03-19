@@ -1,10 +1,20 @@
 # Bundle d'upload pour Symfony2
-
 Ce bundle vous permettra d'ajouter des champs d'upload en ajax dans vos formulaires.  
 [Basé sur le plugin d'upload blueimp/jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 
-## Installation
-Via Composer (A venir)
+## Installation via composer
+Ajouter le `require` à votre fichier composer.json et lancer la commande `composer update`
+
+```json
+// composer.json
+{
+    // ...
+    require: {
+        // ...
+        "bncb/upload-bundle": "~2.3"
+    }
+}
+```
 
 ## Configuration
 Ajouter le bundle à votre kernel
