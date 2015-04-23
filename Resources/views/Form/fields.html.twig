@@ -1,24 +1,32 @@
 {% block bnbc_ajax_file_widget %}
-    {% spaceless %}    
-    
-    <div id="{{ id }}_bnbc_ajax_file_widget" class="bnbc-ajax-file-widget">  
+    {% spaceless %}
+
+    <div id="{{ id }}_bnbc_ajax_file_widget" class="bnbc-ajax-file-widget">
     	{{ block('hidden_widget') }}
         {% set type = 'file' %}
         {% set original_id = id %}
         {% set id = 'bnbc_ajax_file_' ~ original_id %}
-        {% set full_name = 'bnbc_ajax_file_' ~ full_name %}        
+        {% set full_name = 'bnbc_ajax_file_' ~ full_name %}
 
         {% if form.vars.multiple %}
         {%  set attr = {'multiple': form.vars.multiple} %}
         {% endif %}
 
-        {{ block('form_widget_simple') }}  
-        
+        {% for name, value in form.vars.formData %}
+            {% if value %}
+                <input type="hidden" value="{{ value }}" name="{{ id }}_{{ name }}" id="{{ id }}_{{ name }}" />
+            {% endif %}
+        {% endfor %}
+
+        {{ block('form_widget_simple') }}
+
         {% if form.vars.dropZone %}
         <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone">{{ form.vars.dropZoneText }}</div>
         {% endif %}
 
         <script type="text/javascript">
+
+            {# Surcharge des options d'upload #}
             {{ id }}_formData = [];
             {% for name, value in form.vars.formData %}
                 {% if value %}
@@ -26,6 +34,29 @@
                 {% endif %}
             {% endfor %}
 
+            {# Création de la liste des fichiers #}
+            var {{ id }}CreateList = function(){
+                if(!$('#{{ id }}_list').length)
+                    $('#{{ original_id }}_bnbc_ajax_file_widget').append($('<ul/>').attr('id', '{{ id }}_list').addClass('bnbc-ajax-file-list'));
+            }
+
+            {# Tableau pour contenir les fichiers ajoutés via le bouton parcourir, utilisé quand l'auto-upload est défini à false #}
+            var {{ id }}_add = new Array();
+
+            {# Création d'un bouton d'upload #}
+            var {{ id }}CreateManualSubmit = function(){
+                if(!$('#{{ id }}_manual_submit').length){
+                    var {{ id }}_manual_submit = $('<a/>').attr('id', '{{ id }}_manual_submit').addClass('bnbc-ajax-file-manual-submit').text('{% trans %}Upload files{% endtrans %}');
+                    $('#{{ id }}_list').after({{ id }}_manual_submit);
+                    {{ id }}_manual_submit.click(function(){
+                        $.each({{ id }}_add, function (key, data) {
+                            data.submit();
+                        });
+                    });
+                }
+            }
+
+            {# Tableau qui va contenir tous les champs d'upload afin de les executer à la fin #}
             if (typeof bnbc_ajax_file == 'undefined')
                 bnbc_ajax_file = new Array();
 
@@ -40,9 +71,19 @@
                     formData: {{ id }}_formData,
                     paramName: 'bnbc_ajax_file_form[]',
                     {% if form.vars.dropZone %}
-                    dropZone: ('#{{ id }}_dropzone'),                    
+                    dropZone: ('#{{ id }}_dropzone'),
                     {% endif %}
-                    autoUpload: {{ form.vars.autoUpload }},
+                    autoUpload: {% if form.vars.autoUpload %}true{% else %}false{% endif %},
+                    {% if form.vars.autoUpload == false %}
+                    add: function (e, data) {
+                        {{ id }}CreateList();
+                        {{ id }}CreateManualSubmit();
+
+                        var li = $('<li/>').text(data.files[0].name);
+                        $('#{{ id }}_list').append(li);
+                        {{ id }}_add.push(data);
+                    },
+                    {% endif %}
                     progressall: function (e, data) {
                         if(!$('#{{ id }}_progress').length)
                             $('#{{ original_id }}_bnbc_ajax_file_widget').append($('<div/>').attr('id', '{{ id }}_progress').addClass('bnbc-ajax-file-progress'));
@@ -53,23 +94,33 @@
                             progress + '%'
                         ).text(progress + '%');
                     },
-                    done: function (e, data) { 
-                        if(!$('#{{ id }}_list').length)
-                            $('#{{ original_id }}_bnbc_ajax_file_widget').append($('<ul/>').attr('id', '{{ id }}_list').addClass('bnbc-ajax-file-list'));
+                    done: function (e, data) {
+                        {{ id }}CreateList();
+
+                        {% if form.vars.multiple != true %}
+                            $('#{{ original_id }}').val('');
+                            $('#{{ id }}_list').empty();
+                        {% endif %}
 
                         $.each(data.result.bnbc_ajax_file_form, function (index, file) {
                             if(file.error){
-                                var li = $('<li/>').html('<b>' + file.name + ':</b> ' + file.error).addClass('error');                                  
+                                var li = $('<li/>').html('<b>' + file.name + ':</b> ' + file.error).addClass('error');
+                                $('#{{ id }}_list').append(li)
                             }
                             else {
                                 $('#{{ original_id }}').val(bnbcAjaxFileSetValue($('#{{ original_id }}').val(), file.name, ';'));
-                                var li = $('<li/>').html(file.name);                                   
+                                var li = $('li:contains(' + file.name + ')');
+                                if(!li.length){
+                                    li = $('<li/>').text(file.name);
+                                    $('#{{ id }}_list').append(li);
+                                }
+                                else
+                                    li.addClass('active');
                             }
-                            $('#{{ id }}_list').append(li);   
-                        });  
+                        });
                         {% if form.vars.callbackFunction %}
                         {{callbackFunction}}();
-                        {% endif %}  
+                        {% endif %}
                     }
                 });
             });
