@@ -35,12 +35,12 @@ Ajouter les fichiers javascripts à votre template, supprimer la ligne avec jQue
 
 ```twig
 {% javascripts 
-	'@BnbcUploadBundle/Resources/public/js/1_jquery.min.js'
-	'@BnbcUploadBundle/Resources/public/js/2_jquery.ui.widget.js'
-	'@BnbcUploadBundle/Resources/public/js/3_jquery.iframe-transport.js'
-	'@BnbcUploadBundle/Resources/public/js/4_jquery.fileupload.js'
-	'@BnbcUploadBundle/Resources/public/js/5_init.js' %}
-	<script type="text/javascript" src="{{ asset_url }}"></script>
+    '@BnbcUploadBundle/Resources/public/js/1_jquery.min.js'
+    '@BnbcUploadBundle/Resources/public/js/2_jquery.ui.widget.js'
+    '@BnbcUploadBundle/Resources/public/js/3_jquery.iframe-transport.js'
+    '@BnbcUploadBundle/Resources/public/js/4_jquery.fileupload.js'
+    '@BnbcUploadBundle/Resources/public/js/5_init.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
 {% endjavascripts %} 
 ```  
       
@@ -83,13 +83,47 @@ Dossier de téléversement des fichiers par rapport à la racine du dossier web
 Défaut: `'uploads'`  
 Exemple: `'uploads/test'` (Il est possible d'indiquer des sous-dossiers, ils se créeront automatiquement)
 
+### image\_versions
+Génération de formats supplémentaires, 3 formats possibles: `thumbnail`, `medium`, `large`. Le paramètre `crop` permet de recadrer l'image à la taille indiquée  
+Défaut: `null`  
+Exemple:  
+```yaml
+thumbnail:  
+    max_width: 100  
+    max_height: 100  
+    crop: true  
+medium:  
+    max_width: 300  
+    max_height: 300  
+    crop: false  
+large:  
+    max_width: 1024  
+    max_height: 768  
+    crop: false  
+```
+
+### Exemple complet
+
 ```yaml
 # app/config/config.yml
 
 bnbc_upload:
-    max_file_size: null
-    accept_file_types: '/.+$/i'
-    upload_folder: 'uploads'
+    max_file_size: 10485760
+    accept_file_types: '/\.(gif|jpe?g|png)$/i'
+    upload_folder: 'uploads/test'
+    image_versions: 
+        thumbnail:  
+            max_width: 100  
+            max_height: 100  
+            crop: true  
+        medium:  
+            max_width: 300  
+            max_height: 300  
+            crop: false  
+        large:  
+            max_width: 1024  
+            max_height: 768  
+            crop: false  
 ```
 
 ## Utilisation
@@ -105,41 +139,47 @@ $formBuilder->add('myfield', 'bnbc_ajax_file');
 ### multiple
 Téléversement de plusieurs fichiers en même temps  
 Défaut:  `false`
+
 ### autoUpload
 Le(s) fichier(s) se téléverse(nt) automatiquement après avoir été ajouté, si `false` un bouton de soumission apparait.  
 Défaut:  `true`
+
 ### dropZone
 Affichage d'une zone de glisser/déposer  
 Défaut:  `true`
+
 ### dropZoneText
 Texte la zone de glisser/déposer  
 Défaut:  `'Drop file(s) here'`
+
 ### callbackFunction
 Nom d'une fonction javascript à appeler une fois le téléversement terminé  
 Défaut:  `null`
 
+### formData
+Vous pouvez redéfinir les options de configuration globale pour chaque champs dans le paramètre formData  
+Défaut:  ne pas mettre le paramètre
+
 ```php
 $formBuilder->add('myfield', 'bnbc_ajax_file', 
-	array(
+    array(
         'multiple'          => false,
         'autoUpload'        => true,
         'dropZone'          => true,
         'dropZoneText'      => 'Drop file(s) here',
         'callbackFunction'  => null,
-	)
-);
-```
-
-Vous pouvez redéfinir les options de configuration globale pour chaque champs dans le paramètre formData
-
-```php
-$formBuilder->add('myfield', 'bnbc_ajax_file', 
-	array(
-        'formData' => array(
+        'formData'          => array(
             'max_file_size'     => 5 * 1024 * 1024,
             'accept_file_types' => null,
-            'upload_folder'     => 'test', 
-        ),
-	)
+            'upload_folder'     => 'test',
+            'image_versions'    => array(
+                'thumbnail' => array(
+                    max_width  => 100  
+                    max_height => 100  
+                    crop       => true  
+                )
+            )                   
+        )
+    )
 );
 ```

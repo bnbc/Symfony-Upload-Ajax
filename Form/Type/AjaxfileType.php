@@ -13,7 +13,7 @@ class AjaxfileType extends AbstractType
 
     public function __construct()
     {
-        
+
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -22,7 +22,8 @@ class AjaxfileType extends AbstractType
             'formData'     => array(
                 'max_file_size'     => null,
                 'accept_file_types' => null,
-                'upload_folder'     => null, 
+                'upload_folder'     => null,
+                'image_versions'    => null,
             ),
             'multiple'          => false,
             'dropZone'          => true,
@@ -37,11 +38,11 @@ class AjaxfileType extends AbstractType
     {
         $view->vars = array_replace($view->vars, array(
             'formData'          => $options['formData'],
-            'multiple'          => $options['multiple'], 
+            'multiple'          => $options['multiple'],
             'dropZone'          => $options['dropZone'],
-            'autoUpload'        => $options['autoUpload'], 
+            'autoUpload'        => $options['autoUpload'],
             'dropZoneText'      => $options['dropZoneText'],
-            'callbackFunction'  => $options['callbackFunction'], 
+            'callbackFunction'  => $options['callbackFunction'],
         ));
     }
 

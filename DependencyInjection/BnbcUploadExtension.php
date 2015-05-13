@@ -25,9 +25,13 @@ class BnbcUploadExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
+        # On rajoute le tableau "image_versions" si non présent, car sinon ça provoque une erreur : "the parameter bnbc_upload.image_versions must be defined", pas trouvé de solution dans le Configuration.php...
+        if(!isset($config['image_versions']))
+            $config['image_versions'] = null;
+
         # On met la config du bundle dans la config globale accessible depuis n'importe où
         foreach($config as $key=>$value){
             $container->setParameter('bnbc_upload.' . $key, $value);
-        }  
+        }
     }
 }
