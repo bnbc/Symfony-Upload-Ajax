@@ -53,7 +53,28 @@ class DefaultController extends Controller
                 'image_versions'    => $image_versions,
             );
 
-            $upload_handler = new \Bnbc\UploadBundle\BlueImp\UploadHandler($options);
+            $error_messages = array(
+                1 => $this->get('translator')->trans('The uploaded file exceeds the upload_max_filesize directive in php.ini'),
+                2 => $this->get('translator')->trans('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form'),
+                3 => $this->get('translator')->trans('The uploaded file was only partially uploaded'),
+                4 => $this->get('translator')->trans('No file was uploaded'),
+                6 => $this->get('translator')->trans('Missing a temporary folder'),
+                7 => $this->get('translator')->trans('Failed to write file to disk'),
+                8 => $this->get('translator')->trans('A PHP extension stopped the file upload'),
+                'post_max_size' => $this->get('translator')->trans('The uploaded file exceeds the post_max_size directive in php.ini'),
+                'max_file_size' => $this->get('translator')->trans('File is too big'),
+                'min_file_size' => $this->get('translator')->trans('File is too small'),
+                'accept_file_types' => $this->get('translator')->trans('Filetype not allowed'),
+                'max_number_of_files' => $this->get('translator')->trans('Maximum number of files exceeded'),
+                'max_width' => $this->get('translator')->trans('Image exceeds maximum width'),
+                'min_width' => $this->get('translator')->trans('Image requires a minimum width'),
+                'max_height' => $this->get('translator')->trans('Image exceeds maximum height'),
+                'min_height' => $this->get('translator')->trans('Image requires a minimum height'),
+                'abort' => $this->get('translator')->trans('File upload aborted'),
+                'image_resize' => $this->get('translator')->trans('Failed to resize image')
+            );
+
+            $upload_handler = new \Bnbc\UploadBundle\BlueImp\UploadHandler($options, true, $error_messages);
             exit(0);
         }
         else {
