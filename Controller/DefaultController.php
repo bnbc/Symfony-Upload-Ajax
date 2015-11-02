@@ -5,6 +5,8 @@ namespace Bnbc\UploadBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class DefaultController extends Controller
 {
@@ -23,6 +25,15 @@ class DefaultController extends Controller
 
             if(null !== $request->get('upload_folder'))
                 $upload_dir = $web_dir . $request->get('upload_folder') . '/';
+
+            # Création du dossier
+            $fs = new Filesystem();
+            try {
+                $fs->mkdir($upload_dir);
+            }
+            catch (IOExceptionInterface $e) {
+                echo "An error occurred while creating your directory at : ". $e->getPath();
+            }
 
             # accept_file_types
             $accept_file_types = $this->container->getParameter('bnbc_upload.accept_file_types');

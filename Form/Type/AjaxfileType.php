@@ -28,7 +28,7 @@ class AjaxfileType extends AbstractType
             'multiple'          => false,
             'dropZone'          => true,
             'autoUpload'        => true,
-            'dropZoneText'      => 'Drop file(s) here',
+            'dropZoneText'      => 'Glisser/déposer les fichiers ici',
             'callbackFunction'  => null,
         ));
     }
