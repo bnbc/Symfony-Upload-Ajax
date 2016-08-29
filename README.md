@@ -29,9 +29,10 @@ $bundles = array(
     // ...
 );
 ```
-Copiez les assets situés dans le dossier /vendor/bnbc/upload-bundle/Bnbc/UploadBundle/Resources/public/js dans le dossier /web/bundles/bnbc/upload/ et ajoutez les fichiers javascripts à votre template, supprimez la ligne avec jQuery si vous l'avez déjà (requiert jQuery 1.6+).
+Copiez les assets situés dans le dossier `/vendor/bnbc/upload-bundle/Bnbc/UploadBundle/Resources/public/js` dans le dossier `/web/bundles/bnbc/upload` et ajoutez les fichiers javascripts à votre template, supprimez la ligne avec jQuery si vous l'avez déjà (requiert jQuery 1.6+).
 
 ```twig
+<script src="{{ asset('bundles/bnbc/upload/1_jquery.min.js') }}"></script>
 <script src="{{ asset('bundles/bnbc/upload/2_jquery.ui.widget.js') }}"></script>
 <script src="{{ asset('bundles/bnbc/upload/3_jquery.iframe-transport.js') }}"></script>
 <script src="{{ asset('bundles/bnbc/upload/4_jquery.fileupload.js') }}"></script>
