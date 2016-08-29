@@ -137,7 +137,7 @@
                             }
                         });
                         {% if form.vars.callbackFunction %}
-                        {{callbackFunction}}();
+                        {{callbackFunction}}(data.result.bnbc_ajax_file_form);
                         {% endif %}
                     }
                 });
