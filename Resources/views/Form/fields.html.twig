@@ -3,14 +3,6 @@
 
     <div id="{{ id }}_bnbc_ajax_file_widget" class="bnbc-ajax-file-widget">
     	{{ block('hidden_widget') }}
-        {% set type = 'file' %}
-        {% set original_id = id %}
-        {% set id = 'bnbc_ajax_file_' ~ original_id %}
-        {% set full_name = 'bnbc_ajax_file_' ~ full_name %}
-
-        {% if form.vars.multiple %}
-        {%  set attr = {'multiple': form.vars.multiple} %}
-        {% endif %}
 
         {% for name, value in form.vars.formData %}
             {% if value %}
@@ -18,8 +10,18 @@
             {% endif %}
         {% endfor %}
 
-        {{ block('form_widget_simple') }}
+        <div id="{{ id }}_button_replace" class="bnbc-ajax-file-button-replace">
+            {% set type = 'file' %}
+            {% set original_id = id %}
+            {% set id = 'bnbc_ajax_file_' ~ original_id %}
+            {% set full_name = 'bnbc_ajax_file_' ~ full_name %}
 
+            {% if form.vars.multiple %}
+            {%  set attr = {'multiple': form.vars.multiple} %}
+            {% endif %}
+            {% set required = form.vars.required %}
+            {{ block('form_widget_simple') }}
+        </div>
         {% if form.vars.dropZone %}
         <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone">{{ form.vars.dropZoneText }}</div>
         {% endif %}

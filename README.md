@@ -131,6 +131,10 @@ $formBuilder->add('myfield', 'bnbc_ajax_file');
 
 ## Options de configuration du champs fichier (facultatives)
 
+### required
+Champs requis ou non
+Défaut:  `false`
+
 ### multiple
 Téléversement de plusieurs fichiers en même temps
 Défaut:  `false`

@@ -25,6 +25,7 @@ class AjaxfileType extends AbstractType
                 'upload_folder'     => null,
                 'image_versions'    => null,
             ),
+            'required'          => false,
             'multiple'          => false,
             'dropZone'          => true,
             'autoUpload'        => true,
