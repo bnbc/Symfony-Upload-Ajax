@@ -117,8 +117,13 @@
                             percent + '%'
                         ).text(percent + '%');
                         {% endif %}
+
                         {% if form.vars.progressElement is not null %}
                         $('{{ form.vars.progressElement }}').attr('data-progress', percent);
+                        {% endif %}
+
+                        {% if form.vars.progressText is not null %}
+                        $('{{ form.vars.progressText }}').text(percent + '%');
                         {% endif %}
                     },
                     done: function (e, data) {
