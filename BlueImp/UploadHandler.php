@@ -46,6 +46,8 @@ class UploadHandler
     function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
         $this->options = array(
+            // Ajout BNBC pour convertir tous les noms de fichiers en uniqid
+            'uniqid' => false,
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
             'upload_url' => $this->get_full_url().'/files/',
@@ -470,6 +472,10 @@ class UploadHandler
                 break;
             }
             $name = $this->upcount_name($name);
+        }
+        # Si l'option uniqid est activé on converti le nom du fichier
+        if($this->options['uniqid']){
+            $name = str_replace('.', '-', uniqid('', true)) . '.' . pathinfo($name, PATHINFO_EXTENSION);
         }
         return $name;
     }
@@ -1056,10 +1062,6 @@ class UploadHandler
         $file->size = $this->fix_integer_overflow((int)$size);
         $file->type = $type;
 
-
-
-
-
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
@@ -1125,7 +1127,7 @@ class UploadHandler
     protected function body($str) {
         echo $str;
     }
-    
+
     protected function header($str) {
         header($str);
     }

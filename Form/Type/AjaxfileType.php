@@ -25,6 +25,8 @@ class AjaxfileType extends AbstractType
                 'upload_folder'     => null,
                 'image_versions'    => null,
             ),
+            'progressBar'       => false,
+            'progressElement'   => null,
             'required'          => false,
             'multiple'          => false,
             'dropZone'          => true,
@@ -39,6 +41,9 @@ class AjaxfileType extends AbstractType
     {
         $view->vars = array_replace($view->vars, array(
             'formData'          => $options['formData'],
+            'progressBar'       => $options['progressBar'],
+            'progressElement'   => $options['progressElement'],
+            'required'          => $options['required'],
             'multiple'          => $options['multiple'],
             'dropZone'          => $options['dropZone'],
             'autoUpload'        => $options['autoUpload'],

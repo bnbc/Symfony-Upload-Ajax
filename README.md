@@ -63,6 +63,10 @@ twig:
 
 ## Options de configuration globale (facultatives)
 
+### uniqid
+Conversion de tous les noms de fichiers en uniqid
+Défaut: `false`
+
 ### max\_file\_size
 Taille de fichier max en octets
 Défaut: `null` (la limite dépendra alors des variables `upload_max_filesize` et `post_max_size` de votre php.ini)
@@ -103,6 +107,7 @@ large:
 # app/config/config.yml
 
 bnbc_upload:
+    uniqid: true
     max_file_size: 10485760
     accept_file_types: '/\.(gif|jpe?g|png)$/i'
     upload_folder: 'uploads/test'
@@ -135,6 +140,14 @@ $formBuilder->add('myfield', 'bnbc_ajax_file');
 Champs requis ou non
 Défaut:  `false`
 
+### progressBar
+Affichage d'une barre de progression (calque qui voit sa largeur passer de 0 à 100%)
+Défaut:  `false`
+
+### progressElement
+Nom de l'élément auquel on assigne un attribut de progression qui va de 0 à 100 : data-progress
+Défaut:  `null`
+
 ### multiple
 Téléversement de plusieurs fichiers en même temps
 Défaut:  `false`
@@ -157,7 +170,7 @@ Défaut:  `null`
 
 ### formData
 Vous pouvez redéfinir les options de configuration globale pour chaque champs dans le paramètre formData
-Défaut:  ne pas mettre le paramètre
+Défaut: ne pas mettre le paramètre
 
 ```php
 $formBuilder->add('myfield', 'bnbc_ajax_file',
@@ -168,6 +181,7 @@ $formBuilder->add('myfield', 'bnbc_ajax_file',
         'dropZoneText'      => 'Drop file(s) here',
         'callbackFunction'  => null,
         'formData'          => array(
+            'uniqid'            => false,
             'max_file_size'     => 5 * 1024 * 1024,
             'accept_file_types' => null,
             'upload_folder'     => 'test',

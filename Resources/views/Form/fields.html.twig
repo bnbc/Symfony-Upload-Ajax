@@ -62,6 +62,7 @@
             }
 
             {# Création de la barre de progression #}
+            {% if form.vars.progressBar == true %}
             var {{ id }}CreateProgressBar = function(){
                 var progress = $('#{{ id }}_progress');
                 if(!progress.length){
@@ -70,6 +71,7 @@
                 }
                 return progress;
             }
+            {% endif %}
 
             {# Tableau pour contenir les fichiers ajoutés via le bouton parcourir, utilisé quand l'auto-upload est défini à false #}
             var {{ id }}_add = new Array();
@@ -107,12 +109,17 @@
                     },
                     {% endif %}
                     progressall: function (e, data) {
-                        var progress = {{ id }}CreateProgressBar();
                         var percent = parseInt(data.loaded / data.total * 100, 10);
-                        progress.css(
+                        {% if form.vars.progressBar == true %}
+                        var progressBar = {{ id }}CreateProgressBar();                        
+                        progressBar.css(
                             'width',
                             percent + '%'
                         ).text(percent + '%');
+                        {% endif %}
+                        {% if form.vars.progressElement is not null %}
+                        $('{{ form.vars.progressElement }}').attr('data-progress', percent);
+                        {% endif %}
                     },
                     done: function (e, data) {
                         var list = {{ id }}CreateList();

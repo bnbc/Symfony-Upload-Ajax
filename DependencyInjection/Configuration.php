@@ -22,6 +22,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('uniqid')->defaultFalse()->end()
                 ->scalarNode('max_file_size')->defaultNull()->end()
                 ->scalarNode('accept_file_types')->defaultValue('/.+$/i')->end()
                 ->scalarNode('upload_folder')->defaultValue('uploads')->end()

@@ -35,6 +35,11 @@ class DefaultController extends Controller
                 echo "An error occurred while creating your directory at : ". $e->getPath();
             }
 
+            # uniqid
+            $uniqid = $this->container->getParameter('bnbc_upload.uniqid');
+            if(null !== $request->get('uniqid'))
+                $uniqid = $request->get('uniqid');
+
             # accept_file_types
             $accept_file_types = $this->container->getParameter('bnbc_upload.accept_file_types');
             if(null !== $request->get('accept_file_types'))
@@ -59,6 +64,7 @@ class DefaultController extends Controller
                 'upload_dir'        => $upload_dir,
                 'upload_url'        => $upload_url,
                 'param_name'        => 'bnbc_ajax_file_form',
+                'uniqid'            => $uniqid,
                 'accept_file_types' => $accept_file_types,
                 'max_file_size'     => $max_file_size,
                 'image_versions'    => $image_versions,
