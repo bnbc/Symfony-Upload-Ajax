@@ -67,7 +67,7 @@
                 var progress = $('#{{ id }}_progress');
                 if(!progress.length){
                     progress = $('<div/>').attr('id', '{{ id }}_progress').addClass('bnbc-ajax-file-progress');
-                    $('#{{ original_id }}_bnbc_ajax_file_widget').append(progress);
+                    $('#{{ original_id }}_bnbc_ajax_file_widget').{{ form.vars.progressBarPosition }}(progress);
                 }
                 return progress;
             }

@@ -144,6 +144,10 @@ Défaut:  `false`
 Affichage d'une barre de progression (calque qui voit sa largeur passer de 0 à 100%)
 Défaut:  `false`
 
+### progressBarPosition
+Position de la barre de progression, toutes les fonctions d'insertion jQuery sont autorisées
+Défaut:  `append`
+
 ### progressElement
 Nom de l'élément auquel on assigne un attribut de progression qui va de 0 à 100 : data-progress
 Défaut:  `null`

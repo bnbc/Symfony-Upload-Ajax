@@ -25,15 +25,16 @@ class AjaxfileType extends AbstractType
                 'upload_folder'     => null,
                 'image_versions'    => null,
             ),
-            'progressBar'       => false,
-            'progressElement'   => null,
-            'progressText'      => null,
-            'required'          => false,
-            'multiple'          => false,
-            'dropZone'          => true,
-            'autoUpload'        => true,
-            'dropZoneText'      => 'Glisser/déposer les fichiers ici',
-            'callbackFunction'  => null,
+            'progressBar'         => false,
+            'progressBarPosition' => 'append',
+            'progressElement'     => null,
+            'progressText'        => null,
+            'required'            => false,
+            'multiple'            => false,
+            'dropZone'            => true,
+            'autoUpload'          => true,
+            'dropZoneText'        => 'Glisser/déposer les fichiers ici',
+            'callbackFunction'    => null,
         ));
     }
 
@@ -41,16 +42,17 @@ class AjaxfileType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
-            'formData'          => $options['formData'],
-            'progressBar'       => $options['progressBar'],
-            'progressElement'   => $options['progressElement'],
-            'progressText'      => $options['progressText'],
-            'required'          => $options['required'],
-            'multiple'          => $options['multiple'],
-            'dropZone'          => $options['dropZone'],
-            'autoUpload'        => $options['autoUpload'],
-            'dropZoneText'      => $options['dropZoneText'],
-            'callbackFunction'  => $options['callbackFunction'],
+            'formData'            => $options['formData'],
+            'progressBar'         => $options['progressBar'],
+            'progressBarPosition' => $options['progressBarPosition'],
+            'progressElement'     => $options['progressElement'],
+            'progressText'        => $options['progressText'],
+            'required'            => $options['required'],
+            'multiple'            => $options['multiple'],
+            'dropZone'            => $options['dropZone'],
+            'autoUpload'          => $options['autoUpload'],
+            'dropZoneText'        => $options['dropZoneText'],
+            'callbackFunction'    => $options['callbackFunction'],
         ));
     }
 
