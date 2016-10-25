@@ -152,6 +152,10 @@ Défaut:  `append`
 Nom de l'élément auquel on assigne un attribut de progression qui va de 0 à 100 : data-progress
 Défaut:  `null`
 
+### progressText
+Nom de l'élément dans lequel le pourcentage de progression va être mis en texte 
+Défaut:  `null`
+
 ### multiple
 Téléversement de plusieurs fichiers en même temps
 Défaut:  `false`
