@@ -5,18 +5,19 @@ namespace Bnbc\UploadBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class AjaxfileType
+ *
+ * @package Bnbc\UploadBundle\Form\Type
+ */
 class AjaxfileType extends AbstractType
 {
-
-    public function __construct()
-    {
-
-    }
-
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'formData'     => array(
@@ -38,7 +39,11 @@ class AjaxfileType extends AbstractType
         ));
     }
 
-
+    /**
+     * @param FormView      $view
+     * @param FormInterface $form
+     * @param array         $options
+     */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_replace($view->vars, array(
@@ -56,13 +61,18 @@ class AjaxfileType extends AbstractType
         ));
     }
 
-
-    public function getParent()
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
     {
-        return 'form';
+        return $this->getBlockPrefix();
     }
 
-    public function getName()
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
     {
         return 'bnbc_ajax_file';
     }

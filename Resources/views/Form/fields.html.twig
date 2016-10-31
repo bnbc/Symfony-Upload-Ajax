@@ -74,11 +74,11 @@
             {% endif %}
 
             {# Tableau pour contenir les fichiers ajoutés via le bouton parcourir, utilisé quand l'auto-upload est défini à false #}
-            var {{ id }}_add = new Array();
+            var {{ id }}_add = [];
 
             {# Tableau qui va contenir tous les champs d'upload afin de les executer à la fin #}
             if (typeof bnbc_ajax_file == 'undefined')
-                bnbc_ajax_file = new Array();
+                bnbc_ajax_file = [];
 
             bnbc_ajax_file.push(function(){
 
@@ -140,7 +140,8 @@
                                 list.append(li)
                             }
                             else {
-                                $('#' + original_id).val(bnbcAjaxFileSetValue($('#' + original_id).val(), file.name, ';'));
+                                var originalId = '#' + original_id;
+                                $(originalId).val(bnbcAjaxFileSetValue($(originalId).val(), file.name, ';'));
                                 var li = list.find('li:contains(' + file.name + ')');
                                 if(!li.length){
                                     li = $('<li/>').text(file.name);
