@@ -200,9 +200,9 @@ $formBuilder->add('myfield', 'bnbc_ajax_file');
             'upload_folder'     => 'test',
             'image_versions'    => array(
                 'thumbnail' => array(
-                    max_width  => 100
-                    max_height => 100
-                    crop       => true
+                    'max_width'  => 100,
+                    'max_height' => 100,
+                    'crop'       => true
                 )
             )
         )
@@ -224,9 +224,9 @@ $formBuilder->add('myfield', AjaxfileType::class,
             'upload_folder'     => 'test',
             'image_versions'    => array(
                 'thumbnail' => array(
-                    max_width  => 100
-                    max_height => 100
-                    crop       => true
+                    'max_width'  => 100,
+                    'max_height' => 100,
+                    'crop'       => true
                 )
             )
         )
