@@ -32,11 +32,11 @@ $bundles = array(
 Copiez les assets situés dans le dossier `/vendor/bnbc/upload-bundle/Bnbc/UploadBundle/Resources/public/js` dans le dossier `/web/bundles/bnbc/upload` et ajoutez les fichiers javascripts à votre template, supprimez la ligne avec jQuery si vous l'avez déjà (requiert jQuery 1.6+).
 
 ```twig
-<script src="{{ asset('bundles/bnbc/upload/1_jquery.min.js') }}"></script>
-<script src="{{ asset('bundles/bnbc/upload/2_jquery.ui.widget.js') }}"></script>
-<script src="{{ asset('bundles/bnbc/upload/3_jquery.iframe-transport.js') }}"></script>
-<script src="{{ asset('bundles/bnbc/upload/4_jquery.fileupload.js') }}"></script>
-<script src="{{ asset('bundles/bnbc/upload/5_init.js') }}"></script>
+<script src="{{ asset('bundles/bnbcupload/js/1_jquery.min.js') }}"></script>
+<script src="{{ asset('bundles/bnbcupload/js/2_jquery.ui.widget.js') }}"></script>
+<script src="{{ asset('bundles/bnbcupload/js/3_jquery.iframe-transport.js') }}"></script>
+<script src="{{ asset('bundles/bnbcupload/js/4_jquery.fileupload.js') }}"></script>
+<script src="{{ asset('bundles/bnbcupload/js/5_init.js') }}"></script>
 ```
 
 Ajouter la route
@@ -56,9 +56,8 @@ Ajouter la ressource pour le type de champs `bnbc_ajax_file`
 # app/config/config.yml
 
 twig:
-    form:
-        resources:
-            - 'BnbcUploadBundle:Form:fields.html.twig'
+    form_themes:
+            - BnbcUploadBundle:Form:fields.html.twig
 ```
 
 ## Options de configuration globale (facultatives)
@@ -131,7 +130,12 @@ bnbc_upload:
 Ajouter un champs de type `bnbc_ajax_file` à votre formulaire
 
 ```php
+# Symfony 2
+
 $formBuilder->add('myfield', 'bnbc_ajax_file');
+
+# Symfony 3
+$formBuilder->add('myfield', AjaxfileType::class);
 ```
 
 ## Options de configuration du champs fichier (facultatives)
@@ -181,7 +185,8 @@ Vous pouvez redéfinir les options de configuration globale pour chaque champs d
 Défaut: ne pas mettre le paramètre
 
 ```php
-$formBuilder->add('myfield', 'bnbc_ajax_file',
+# Symfony 2
+$formBuilder->add('myfield', 'bnbc_ajax_file');
     array(
         'multiple'          => false,
         'autoUpload'        => true,
@@ -195,9 +200,33 @@ $formBuilder->add('myfield', 'bnbc_ajax_file',
             'upload_folder'     => 'test',
             'image_versions'    => array(
                 'thumbnail' => array(
-                    max_width  => 100
-                    max_height => 100
-                    crop       => true
+                    'max_width'  => 100,
+                    'max_height' => 100,
+                    'crop'       => true
+                )
+            )
+        )
+    )
+);
+
+# Symfony 3
+$formBuilder->add('myfield', AjaxfileType::class,
+    array(
+        'multiple'          => false,
+        'autoUpload'        => true,
+        'dropZone'          => true,
+        'dropZoneText'      => 'Drop file(s) here',
+        'callbackFunction'  => null,
+        'formData'          => array(
+            'uniqid'            => false,
+            'max_file_size'     => 5 * 1024 * 1024,
+            'accept_file_types' => null,
+            'upload_folder'     => 'test',
+            'image_versions'    => array(
+                'thumbnail' => array(
+                    'max_width'  => 100,
+                    'max_height' => 100,
+                    'crop'       => true
                 )
             )
         )
