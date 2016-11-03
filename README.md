@@ -29,7 +29,7 @@ $bundles = array(
     // ...
 );
 ```
-Copiez les assets situés dans le dossier `/vendor/bnbc/upload-bundle/Bnbc/UploadBundle/Resources/public/js` dans le dossier `/web/bundles/bnbc/upload` et ajoutez les fichiers javascripts à votre template, supprimez la ligne avec jQuery si vous l'avez déjà (requiert jQuery 1.6+).
+Si cela n'a pas déjà été fais par composer, copiez les assets situés dans le dossier `/vendor/bnbc/upload-bundle/Bnbc/UploadBundle/Resources/public/js` dans le dossier `/web/bundles/bnbcupload/js` et ajoutez les fichiers javascripts à votre template, supprimez la ligne avec jQuery si vous l'avez déjà (requiert jQuery 1.6+).
 
 ```twig
 <script src="{{ asset('bundles/bnbcupload/js/1_jquery.min.js') }}"></script>
@@ -131,7 +131,6 @@ Ajouter un champs de type `bnbc_ajax_file` à votre formulaire
 
 ```php
 # Symfony 2
-
 $formBuilder->add('myfield', 'bnbc_ajax_file');
 
 # Symfony 3
