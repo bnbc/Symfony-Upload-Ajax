@@ -185,7 +185,7 @@ Défaut: ne pas mettre le paramètre
 
 ```php
 # Symfony 2
-$formBuilder->add('myfield', 'bnbc_ajax_file');
+$formBuilder->add('myfield', 'bnbc_ajax_file',
     array(
         'multiple'          => false,
         'autoUpload'        => true,
