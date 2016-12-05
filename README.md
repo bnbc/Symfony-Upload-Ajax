@@ -232,3 +232,76 @@ $formBuilder->add('myfield', AjaxfileType::class,
     )
 );
 ```
+
+## Exemple de traitement du fichier téléversé (pas optimisé et pas forcément adapté à tous)   
+```php
+
+    /**
+     * Creates a new entity.
+     *
+     * @Route("/new", name="admin_entity_new")
+     * @Method({"GET", "POST"})
+     */
+    public function newAction(Request $request)
+    {
+        $entity = new Entity();
+        $form = $this->createForm('AdminBundle\Form\EntityType', $entity);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush($entity);
+
+            if($entity->getPhoto()){
+                $entity->setPhoto($this->_movePhoto($entity));
+            }            
+            $em->flush($entity);
+
+            return $this->redirectToRoute('admin_entity_show', array('id' => $entity->getId()));
+        }
+
+        return $this->render('AppBundle:entity:new.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        ));
+    }
+
+    # Traitement de la photo
+    protected function _movePhoto($data){
+        $fs = new Filesystem();
+
+        $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/';
+        $coach_dir = $this->_createEntityFolder($data);
+
+        # On déplace la photo dans le dossier
+        if($photo = $data->getPhoto()){
+            $ext = pathinfo($photo, PATHINFO_EXTENSION);
+            $name = 'photo.' . $ext;
+
+            # Si le fichier existe (il peut ne pas exister dans le cas d'une modification où on uploaderai pas un nouveau fichier)
+            if(file_exists($dir . $photo)){
+                $fs->copy($dir . $photo, $coach_dir . '/' . $name, true);
+                $fs->remove($dir . $photo);
+            }
+            return $name;
+        }
+        else {
+            return null;
+        }
+    }
+    
+    # Création du dossier pour accueillir l'image
+    protected function _createEntityFolder($data){
+        $fs = new Filesystem();
+        $dir = $this->get('kernel')->getRootDir() . '/../web/data/entity/' . $data->getId();
+        try {
+            $fs->mkdir($dir);
+        }
+        catch (IOExceptionInterface $e) {
+            echo "Une erreur est survenue lors de la création du dossier : ". $e->getPath();
+        }
+        return $dir;
+    }
+
+```

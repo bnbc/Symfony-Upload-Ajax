@@ -2,13 +2,13 @@
     {% spaceless %}
 
     <div id="{{ id }}_bnbc_ajax_file_widget" class="bnbc-ajax-file-widget">
-    	{{ block('hidden_widget') }}
+        {{ block('hidden_widget') }}
 
-        {% for name, value in form.vars.formData %}
-            {% if value %}
-                <input type="hidden" value="{{ value }}" name="{{ id }}_{{ name }}" id="{{ id }}_{{ name }}" />
+        {% for name, val in form.vars.formData %}
+            {% if val %}
+                <input type="hidden" value="{{ val }}" name="{{ id }}_{{ name }}" id="{{ id }}_{{ name }}" />
             {% endif %}
-        {% endfor %}
+        {% endfor %}   
 
         <div id="{{ id }}_button_replace" class="bnbc-ajax-file-button-replace">
             {% set type = 'file' %}
@@ -85,8 +85,9 @@
                 var id = '{{ id }}';
                 var original_id = '{{ original_id }}';
 
-                {# Fix refresh page #}
-                $('#' + original_id).val('');
+                {# Si jamais on refresh la page on vide le champs caché original qui pourrait contenir des fichiers non existant sauf si on est dans le cas d'une édition et ou le champs aurait déjà une valeur qu'il faut garder #}         
+                if(!$('#' + id).attr('value'))
+                    $('#' + original_id).val('');
 
                 {# Call fileupload plugin #}
                 $('#' + id).fileupload({
