@@ -178,6 +178,7 @@ Défaut:  `'Drop file(s) here'`
 ### callbackFunction
 Nom d'une fonction javascript à appeler une fois le téléversement terminé   
 Défaut:  `null`
+Exemple: `var afterUpload = function(files){};` où `files` est un tableau des fichiers téléversés
 
 ### formData
 Vous pouvez redéfinir les options de configuration globale pour chaque champs dans le paramètre formData   
