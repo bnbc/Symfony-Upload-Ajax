@@ -145,39 +145,43 @@ Défaut :  `false`
 
 ### progressBar
 Affichage d'une barre de progression (calque qui voit sa largeur passer de 0 à 100%)   
-Défaut :  `false`
+Défaut : `false`
+
+### progressBarClass
+Classe(s) css pour la barre de progression (séparé par des espaces)   
+Défaut : `bnbc-ajax-file-progress`
 
 ### progressBarPosition
 Position de la barre de progression, toutes les fonctions d'insertion jQuery sont autorisées   
-Défaut :  `append`
+Défaut : `append`
 
 ### progressElement
 Nom de l'élément auquel on assigne un attribut de progression qui va de 0 à 100 : data-progress   
-Défaut :  `null`
+Défaut : `null`
 
 ### progressText
 Nom de l'élément dans lequel le pourcentage de progression va être mis en texte   
-Défaut :  `null`
+Défaut : `null`
 
 ### multiple
 Téléversement de plusieurs fichiers en même temps   
-Défaut :  `false`
+Défaut : `false`
 
 ### autoUpload
 Le(s) fichier(s) se téléverse(nt) automatiquement après avoir été ajouté, si `false` un bouton de soumission apparait.   
-Défaut :  `true`
+Défaut : `true`
 
 ### dropZone
 Affichage d'une zone de glisser/déposer   
-Défaut :  `true`
+Défaut : `true`
 
 ### dropZoneText
 Texte la zone de glisser/déposer   
-Défaut :  `'Drop file(s) here'`
+Défaut : `'Drop file(s) here'`
 
 ### callbackFunction
 Nom d'une fonction javascript à appeler une fois le téléversement terminé   
-Défaut :  `null`   
+Défaut : `null`   
 Exemple : `afterUpload`   
 Utilisation dans un template : `var afterUpload = function(files){};` où `files` est un tableau des fichiers téléversés
 
