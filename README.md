@@ -64,27 +64,27 @@ twig:
 
 ### uniqid
 Conversion de tous les noms de fichiers en uniqid  
-Défaut: `false`
+Défaut : `false`
 
 ### max\_file\_size
 Taille de fichier max en octets  
-Défaut: `null` (la limite dépendra alors des variables `upload_max_filesize` et `post_max_size` de votre php.ini)  
-Exemple: 10 * 1024 * 1024 = 10485760 représente (10 Mo)   
+Défaut : `null` (la limite dépendra alors des variables `upload_max_filesize` et `post_max_size` de votre php.ini)  
+Exemple : 10 * 1024 * 1024 = 10485760 représente (10 Mo)   
 
 ### accept\_file\_types
 Expression régulière pour gérer les fichiers ou types de fichiers acceptés   
-Défaut: `'/.+$/i'` (Autorise tous les fichiers)   
-Exemple: `'/\.(gif|jpe?g|png)$/i'` (Autorise uniquement les fichiers images gif, jpeg et png)
+Défaut : `'/.+$/i'` (Autorise tous les fichiers)   
+Exemple : `'/\.(gif|jpe?g|png)$/i'` (Autorise uniquement les fichiers images gif, jpeg et png)
 
 ### upload\_folder
 Dossier de téléversement des fichiers par rapport à la racine du dossier web   
-Défaut: `'uploads'`   
-Exemple: `'uploads/test'` (Il est possible d'indiquer des sous-dossiers, ils se créeront automatiquement)
+Défaut : `'uploads'`   
+Exemple : `'uploads/test'` (Il est possible d'indiquer des sous-dossiers, ils se créeront automatiquement)
 
 ### image\_versions
 Génération de formats supplémentaires, 3 formats possibles: `thumbnail`, `medium`, `large`. Le paramètre `crop` permet de recadrer l'image à la taille indiquée   
-Défaut: `null`   
-Exemple:
+Défaut : `null`   
+Exemple :
 ```yaml
 thumbnail:
     max_width: 100
@@ -141,48 +141,49 @@ $formBuilder->add('myfield', AjaxfileType::class);
 
 ### required
 Champs requis ou non   
-Défaut:  `false`
+Défaut :  `false`
 
 ### progressBar
 Affichage d'une barre de progression (calque qui voit sa largeur passer de 0 à 100%)   
-Défaut:  `false`
+Défaut :  `false`
 
 ### progressBarPosition
 Position de la barre de progression, toutes les fonctions d'insertion jQuery sont autorisées   
-Défaut:  `append`
+Défaut :  `append`
 
 ### progressElement
 Nom de l'élément auquel on assigne un attribut de progression qui va de 0 à 100 : data-progress   
-Défaut:  `null`
+Défaut :  `null`
 
 ### progressText
 Nom de l'élément dans lequel le pourcentage de progression va être mis en texte   
-Défaut:  `null`
+Défaut :  `null`
 
 ### multiple
 Téléversement de plusieurs fichiers en même temps   
-Défaut:  `false`
+Défaut :  `false`
 
 ### autoUpload
 Le(s) fichier(s) se téléverse(nt) automatiquement après avoir été ajouté, si `false` un bouton de soumission apparait.   
-Défaut:  `true`
+Défaut :  `true`
 
 ### dropZone
 Affichage d'une zone de glisser/déposer   
-Défaut:  `true`
+Défaut :  `true`
 
 ### dropZoneText
 Texte la zone de glisser/déposer   
-Défaut:  `'Drop file(s) here'`
+Défaut :  `'Drop file(s) here'`
 
 ### callbackFunction
 Nom d'une fonction javascript à appeler une fois le téléversement terminé   
-Défaut:  `null`   
-Exemple: `var afterUpload = function(files){};` où `files` est un tableau des fichiers téléversés
+Défaut :  `null`   
+Exemple : `afterUpload`   
+Utilisation dans un template : `var afterUpload = function(files){};` où `files` est un tableau des fichiers téléversés
 
 ### formData
 Vous pouvez redéfinir les options de configuration globale pour chaque champs dans le paramètre formData   
-Défaut: ne pas mettre le paramètre
+Défaut : ne pas mettre le paramètre
 
 ```php
 # Symfony 2
