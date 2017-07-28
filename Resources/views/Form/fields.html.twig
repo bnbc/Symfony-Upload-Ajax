@@ -3,12 +3,50 @@
 
     <div id="{{ id }}_bnbc_ajax_file_widget" class="bnbc-ajax-file-widget">
         {{ block('hidden_widget') }}
-
+        
+        {# A SUPPRIMER QUAND BIEN TESTER
         {% for name, val in form.vars.formData %}
             {% if val %}
                 <input type="hidden" value="{{ val }}" name="{{ id }}_{{ name }}" id="{{ id }}_{{ name }}" />
             {% endif %}
         {% endfor %}   
+        #}
+        {% macro createHiddenInputFormData(id, datas, name) %}       
+            {% if datas|length %}
+                {% for subname, value in datas %}                        
+                    {% if name == '' %}
+                    {% set varName = subname %}
+                    {% else %}
+                    {% set varName = name ~ '[' ~ subname ~ ']' %}
+                    {% endif %}
+                    {% if value is iterable %}
+                        {{ _self.createHiddenInputFormData(id, value, varName) }}
+                    {% else %}                                                    
+                        <input type="hidden" value="{{ value }}" name="{{ id }}_{{ varName }}" id="{{ id }}_{{ varName|replace('[', '-')|replace(']', '-') }}" />
+                    {% endif %} 
+                {% endfor %}        
+            {% endif %}        
+        {% endmacro createHiddenInputFormData %}        
+
+        {% macro pushFormData(id, datas, name) %}       
+            {% if datas|length %}
+                {% for subname, value in datas %}                        
+                    {% if name == '' %}
+                    {% set varName = subname %}
+                    {% else %}
+                    {% set varName = name ~ '[' ~ subname ~ ']' %}
+                    {% endif %}
+                    {% if value is iterable %}
+                        {{ _self.pushFormData(id, value, varName) }}
+                    {% else %}                                                    
+                        {{ id }}_formData.push({'name': '{{ varName }}', value: '{{ value }}'});
+                    {% endif %} 
+                {% endfor %}        
+            {% endif %}        
+        {% endmacro pushFormData %}
+
+        {% import _self as macros %}
+        {{ macros.createHiddenInputFormData(id, form.vars.formData, '') }}
 
         <div id="{{ id }}_button_replace" class="bnbc-ajax-file-button-replace">
             {% set type = 'file' %}
@@ -28,13 +66,18 @@
 
         <script type="text/javascript">
 
-            {# Surcharge des options d'upload #}
+            {# Surcharge des options d'upload #}            
+            {# A SUPPRIMER QUAND BIEN TESTER
             {{ id }}_formData = [];
             {% for name, value in form.vars.formData %}
                 {% if value %}
                     {{ id }}_formData.push({'name': '{{ name }}', value: '{{ value }}'});
                 {% endif %}
             {% endfor %}
+            #}  
+
+            {{ id }}_formData = []; 
+            {{ macros.pushFormData(id, form.vars.formData, '') }}     
 
             {# Création de la liste des fichiers #}
             var {{ id }}CreateList = function(){
