@@ -21,6 +21,7 @@ class AjaxfileType extends AbstractType
     {
         $resolver->setDefaults(array(
             'formData'     => array(
+                'uniqid'            => null,
                 'max_file_size'     => null,
                 'accept_file_types' => null,
                 'upload_folder'     => null,

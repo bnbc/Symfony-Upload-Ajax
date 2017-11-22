@@ -11,18 +11,22 @@
             {% endif %}
         {% endfor %}   
         #}
-        {% macro createHiddenInputFormData(id, datas, name) %}       
+        
+        {% macro createHiddenInputFormData(id, datas, name) %}  
             {% if datas|length %}
-                {% for subname, value in datas %}                        
-                    {% if name == '' %}
-                    {% set varName = subname %}
-                    {% else %}
-                    {% set varName = name ~ '[' ~ subname ~ ']' %}
-                    {% endif %}
-                    {% if value is iterable %}
-                        {{ _self.createHiddenInputFormData(id, value, varName) }}
-                    {% else %}                                                    
-                        <input type="hidden" value="{{ value }}" name="{{ id }}_{{ varName }}" id="{{ id }}_{{ varName|replace('[', '-')|replace(']', '-') }}" />
+                {% for subname, value in datas %} 
+                    {# Si valeur null on n'affiche pas le champs afin de prendre la valeur par défaut #}
+                    {% if value is not null %}                      
+                        {% if name == '' %}
+                        {% set varName = subname %}
+                        {% else %}
+                        {% set varName = name ~ '[' ~ subname ~ ']' %}
+                        {% endif %}
+                        {% if value is iterable %}
+                            {{ _self.createHiddenInputFormData(id, value, varName) }}
+                        {% else %}                                                    
+                            <input type="hidden" value="{{ value }}" name="{{ id }}_{{ varName }}" id="{{ id }}_{{ varName|replace('[', '-')|replace(']', '-') }}" />
+                        {% endif %}
                     {% endif %} 
                 {% endfor %}        
             {% endif %}        
@@ -30,17 +34,19 @@
 
         {% macro pushFormData(id, datas, name) %}       
             {% if datas|length %}
-                {% for subname, value in datas %}                        
-                    {% if name == '' %}
-                    {% set varName = subname %}
-                    {% else %}
-                    {% set varName = name ~ '[' ~ subname ~ ']' %}
+                {% for subname, value in datas %}   
+                    {% if value is not null %}                    
+                        {% if name == '' %}
+                        {% set varName = subname %}
+                        {% else %}
+                        {% set varName = name ~ '[' ~ subname ~ ']' %}
+                        {% endif %}
+                        {% if value is iterable %}
+                            {{ _self.pushFormData(id, value, varName) }}
+                        {% else %}                                                    
+                            {{ id }}_formData.push({'name': '{{ varName }}', value: '{{ value }}'});
+                        {% endif %}
                     {% endif %}
-                    {% if value is iterable %}
-                        {{ _self.pushFormData(id, value, varName) }}
-                    {% else %}                                                    
-                        {{ id }}_formData.push({'name': '{{ varName }}', value: '{{ value }}'});
-                    {% endif %} 
                 {% endfor %}        
             {% endif %}        
         {% endmacro pushFormData %}
