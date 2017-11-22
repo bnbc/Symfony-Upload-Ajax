@@ -193,12 +193,16 @@ Défaut : ne pas mettre le paramètre
 # Symfony 2
 $formBuilder->add('myfield', 'bnbc_ajax_file',
     array(
-        'multiple'          => false,
-        'autoUpload'        => true,
-        'dropZone'          => true,
-        'dropZoneText'      => 'Drop file(s) here',
-        'callbackFunction'  => null,
-        'formData'          => array(
+        'required'            => false,
+        'progressBar'         => false,
+        'progressBarClass'    => 'bnbc-ajax-file-progress',
+        'progressBarPosition' => 'append',
+        'multiple'            => false,
+        'autoUpload'          => true,
+        'dropZone'            => true,
+        'dropZoneText'        => 'Drop file(s) here',
+        'callbackFunction'    => null,
+        'formData'            => array(
             'uniqid'            => false,
             'max_file_size'     => 5 * 1024 * 1024,
             'accept_file_types' => null,
