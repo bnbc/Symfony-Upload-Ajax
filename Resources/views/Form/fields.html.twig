@@ -64,7 +64,12 @@
             {%  set attr = {'multiple': form.vars.multiple} %}
             {% endif %}
             {% set required = form.vars.required %}
-            {{ block('form_widget_simple') }}
+            <label class="bnbc-ajax-file-button-replace-label">
+                {{ block('form_widget_simple') }}
+                {% if form.vars.label %}
+                <span class="bnbc-ajax-file-button-replace-label-text">{{ form.vars.label }}</span>
+                {% endif %}
+            </label>
         </div>
         {% if form.vars.dropZone %}
         <div id="{{ id }}_dropzone" class="bnbc-ajax-file-dropzone">{{ form.vars.dropZoneText }}</div>

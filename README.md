@@ -167,6 +167,10 @@ Défaut : `null`
 Téléversement de plusieurs fichiers en même temps   
 Défaut : `false`
 
+### label
+Label pour le bouton d'upload si vous souhaitez le personnaliser en css 
+Défaut : `null`
+
 ### autoUpload
 Le(s) fichier(s) se téléverse(nt) automatiquement après avoir été ajouté, si `false` un bouton de soumission apparait.   
 Défaut : `true`
@@ -198,6 +202,7 @@ $formBuilder->add('myfield', 'bnbc_ajax_file',
         'progressBarClass'    => 'bnbc-ajax-file-progress',
         'progressBarPosition' => 'append',
         'multiple'            => false,
+        'label'               => null,
         'autoUpload'          => true,
         'dropZone'            => true,
         'dropZoneText'        => 'Drop file(s) here',
@@ -221,27 +226,16 @@ $formBuilder->add('myfield', 'bnbc_ajax_file',
 # Symfony 3
 $formBuilder->add('myfield', AjaxfileType::class,
     array(
-        'multiple'          => false,
-        'autoUpload'        => true,
-        'dropZone'          => true,
-        'dropZoneText'      => 'Drop file(s) here',
-        'callbackFunction'  => null,
-        'formData'          => array(
-            'uniqid'            => false,
-            'max_file_size'     => 5 * 1024 * 1024,
-            'accept_file_types' => null,
-            'upload_folder'     => 'test',
-            'image_versions'    => array(
-                'thumbnail' => array(
-                    'max_width'  => 100,
-                    'max_height' => 100,
-                    'crop'       => true
-                )
-            )
-        )
+        'required'            => false,
+        'progressBar'         => false,
+        'progressBarClass'    => 'bnbc-ajax-file-progress',
+        ...        
     )
 );
 ```
+
+## Exemple de code css pour personnaliser le bouton "Parcourir"
+A venir...
 
 ## Exemple de traitement du fichier téléversé (pas optimisé et pas forcément adapté à tous)   
 ```php
