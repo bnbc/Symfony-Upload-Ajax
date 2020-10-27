@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.3.8",
-        "symfony/framework-bundle":         "^2.* || ^3.* || ^4.*",
+        "symfony/framework-bundle":         "^2 || ^3 || ^4",
         "twig/twig":                        "*"
     },
     "autoload": {
